@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="src/output.css">
+</head>
+
+<body class="flex justify-center bg-gradient-to-r from-green-400 to-blue-500">
+    <div class="bg-white/20 backdrop-filter backdrop-blur-lg shadow-lg  rounded-2xl p-8 w-[320px] md:w-[700px] h-[450px] md:h-[500px] flex flex-col gap-8  mt-20">
+       <h1 class=" ml-14 md:ml-60 font-bold text-2xl md:text-4xl text-pink-700">To-Do List</h1>
+       
+        <div id="input_form" class="md:ml-20">
+            <input class=" w-[150px] md:w-[250px] rounded-full border border-r-2 border-l-4 border-pink-500 pl-5" id="input_task" type="text" placeholder="Enter Your Task">
+            <button id="add_button" class=" border rounded-full pl-2 md:pl-5 pr-2 md:pr-5 shadow-lg shadow-slate-700 ml-4 md:ml-16 bg-teal-500 hover:bg-teal-400">Add Task</button>
+        </div>
+        <div class="task ml-8 md:ml-28">
+
+
+
+            <ul id="task_list" class="list-disc">
+                <div class="list flex flex-row gap-5 md:gap-40">
+                    <li id="list_item">Hello</li> <button onclick="deleteFunction()"
+                        class="text-white hover:text-slate-300 delete_button">Remove</button>
+                </div>
+            </ul>
+
+
+        </div>
+    </div>
+
+
+
+    <script>
+
+        let task_list = document.querySelector("#task_list")
+        let list_item = document.querySelector("#list_item")
+
+
+        document.querySelector("#add_button").addEventListener("click", () => {
+            let input = document.querySelector("#input_task").value;
+
+            let html = `<div class="list flex flex-row gap-5 md:gap-40">
+                    <li id="list_item">${input}</li> <button onclick="deleteFunction()" class="text-white hover:text-slate-300 delete_button">Remove</button>
+                </div>`
+
+            if (input == "") {
+                alert("Please Enter Your Task")
+            }
+            else {
+                task_list.innerHTML += html;
+                document.querySelector("#input_task").value = "";
+            }
+            // document.querySelector("#add_button").classList = "bg-indigo-300"
+
+        });
+        function deleteFunction() {
+            
+            console.log('hello')
+        }
+        // document.querySelector('.delete_button').addEventListener("click", ()=>{
+        //     alert("hello")
+        // })
+        // console.log('hi');
+        task_list.addEventListener('click', (event) => {
+            console.log(event.target.nodeName)
+            if (event.target.nodeName == 'BUTTON') {
+                event.target.parentElement.remove();
+            }
+            
+        })
+
+    </script>
+</body>
+
+</html>
