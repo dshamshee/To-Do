@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="src/output.css">
+</head>
+
+<body class="flex justify-center flex-col items-center bg-gradient-to-r from-green-400 to-blue-500">
+    <h1 class=" mt-8 md:font-bold text-2xl text-lime-200" >Make Your Day Easier</h1>
+    <!-- <h1 class=" mt-8 md:font-bold text-2xl text-lime-200" >To-Do LIst</h1> -->
+    <div
+        class="bg-white/20 backdrop-filter backdrop-blur-lg shadow-lg  rounded-2xl p-8 pb-20 w-[320px] md:w-[700px] h-auto md:h-auto flex flex-col gap-8  mt-2">
+        <h1 class=" ml-16 md:ml-60 font-bold text-2xl md:text-4xl text-pink-700">To-Do List</h1>
+
+        <div id="input_form" class="md:ml-20">
+            <input class=" w-[150px] md:w-[250px] rounded-full border border-r-2 border-l-4 border-pink-500 pl-5"
+                id="input_task" type="text" placeholder="Enter Your Task">
+            <button id="add_button"
+                class=" font-semibold border border-sky-700 border-l-4 border-r-4 rounded-full pl-2 md:pl-5 pr-2 md:pr-5 shadow-lg shadow-slate-700 ml-3 md:ml-16 bg-teal-500 hover:bg-teal-400">Add
+                Task</button>
+        </div>
+        <div class="task ml-8 md:ml-28">
+
+            <table id="task_list">
+            </table>
+
+            <!-- <ul id="task_list" class="list-disc">
+                <div class="list flex flex-row gap-5 md:gap-40">
+                <li id="list_item">Hello</li> <button
+                    class="text-white hover:text-slate-300 delete_button">Remove</button>
+        </div>
+        </ul> -->
+    </div>
+    </div>
+
+
+
+
+    <script>
+
+        let task_list = document.querySelector("#task_list")
+        let list_item = document.querySelector("#list_item")
+        let localstorageValue = 0
+
+
+        document.querySelector("#add_button").addEventListener("click", () => {
+            let input = document.querySelector("#input_task").value;
+
+            let html = `<tr class="list">
+                            <td id="list_item">${input}</td> 
+                            <td><button class="text-white hover:text-slate-300 delete_button ml-6 md:ml-32">Remove</button></td>
+                        </tr>`
+
+            if (input == "") {
+                alert("Please Enter Your Task")
+            }
+            else {
+                let val = String(input)
+                let key = localStorage.length 
+                task_list.innerHTML += html;
+                localStorage.setItem(key, val)
+                document.querySelector("#input_task").value = "";
+                localstorageValue++
+                console.log(localstorageValue)
+            }
+        });
+       
+
+        function display(){
+            for(let i=0; i<localStorage.length; i++){
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                if(value == "Deleted"){
+                    continue;
+                }
+                console.log(value)
+                let html = `<tr class="list">
+                            <td id="list_item">${value}</td> 
+                            <td><button class="text-white hover:text-slate-300 delete_button ml-6 md:ml-32">Remove</button></td>
+                        </tr>`
+                task_list.innerHTML += html;
+
+            }
+        }
+        display()
+
+
+
+        task_list.addEventListener('click', (event) => {
+            console.log(event.target.nodeName)
+            if (event.target.nodeName == 'BUTTON') {
+                // console.log(event.target.parentElement.parentElement)
+                event.target.parentElement.parentElement.remove();
+                let parent = event.target.parentElement.parentElement.firstElementChild.innerHTML
+                // console.log(parent)
+                for(let i =0; i<localStorage.length; i++){
+                if(localStorage.getItem(i) == parent){
+                    localStorage.setItem(i,"Deleted")
+                }
+                }
+                // console.log(parent)
+                
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>
